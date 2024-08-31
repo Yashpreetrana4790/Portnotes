@@ -17,7 +17,7 @@ import SubLink from "./sublink";
 
 export function Leftbar() {
   return (
-    <aside className="md:flex hidden flex-[1] min-w-[230px] sticky top-16 flex-col h-[92.75vh] overflow-y-auto">
+    <aside className="lg:flex hidden flex-[1] min-w-[230px] sticky top-16 flex-col h-[92.75vh] overflow-y-auto">
       <ScrollArea className="py-4">
         <Menu />
       </ScrollArea>
@@ -62,7 +62,7 @@ function Menu({ isSheet = false }) {
       {ROUTES.map((item, index) => {
         const modifiedItems = {
           ...item,
-          href: `/docs${item.href}`,
+          href: `/notes${item.href}`,
           level: 0,
           isSheet,
         };

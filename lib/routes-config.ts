@@ -99,3 +99,4 @@ function getRecurrsiveAllLinks(node: EachRoute) {
 }
 
 export const page_routes = ROUTES.map((it) => getRecurrsiveAllLinks(it)).flat();
+

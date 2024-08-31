@@ -9,13 +9,10 @@ import { page_routes } from "@/lib/routes-config";
 import { SheetClose } from "@/components/ui/sheet";
 
 export const NAVLINKS = [
-  {
-    title: "About Me",
-    href: "/about",
-  },
+
   {
     title: "Notes",
-    href: `/docs${page_routes[0].href}`,
+    href: `/notes${page_routes[0].href}`,
   },
   {
     title: "Blog",
@@ -91,7 +88,7 @@ export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2.5">
       <Crown className="w-7 h-7 text-muted-foreground fill-[#745080]" color="#745080" />
-      <h2 className="text-md font-bold text-violet-950">Rambler</h2>
+      <h2 className="text-md font-bold text-violet-950 dark:text-primary-light">Rambler</h2>
     </Link>
   );
 }

@@ -25,7 +25,8 @@ const config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "#745080",
+          light: "#9e72ac",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -63,8 +64,8 @@ const config = {
         regular: ["var(--font-geist-sans)"],
         sans: ["var(--font-geist-sans)"],
         mono: ["var(--font-geist-mono)"],
-        display: ["var(--font-geist-sans)"],
-        inter : ["var(--font-inter)"],
+        display: ["var(--font-greatvibes)"],
+        inter: ["var(--font-inter)"],
       },
       keyframes: {
         "accordion-down": {

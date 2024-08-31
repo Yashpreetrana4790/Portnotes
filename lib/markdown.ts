@@ -49,7 +49,7 @@ async function parseMdx<Frontmatter>(rawMdx: string) {
   });
 }
 
-// logic for docs
+
 
 type BaseMdxFrontmatter = {
   title: string;
@@ -147,6 +147,7 @@ export async function getAllBlogStaticPaths() {
 
 export async function getAllBlogs() {
   const blogFolder = path.join(process.cwd(), "/contents/blogs/");
+
   const files = await fs.readdir(blogFolder);
   return await Promise.all(
     files.map(async (file) => {
@@ -162,5 +163,6 @@ export async function getAllBlogs() {
 
 export async function getBlogForSlug(slug: string) {
   const blogs = await getAllBlogs();
+
   return blogs.find((it) => it.slug == slug);
 }

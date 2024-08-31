@@ -4,7 +4,7 @@ import Copy from "./copy";
 export default function Pre({
   children,
   raw,
-  ...rest
+  ...rest 
 }: ComponentProps<"pre"> & { raw?: string }) {
   return (
     <div className="my-5 relative">
