@@ -58,7 +58,7 @@ export function Navbar() {
                 <GithubIcon className="h-[1.1rem] w-[1.1rem]" />
               </Link>
               <Link
-                href="#"
+                href="https://x.com/Dev_YashRana"
                 className={buttonVariants({
                   variant: "ghost",
                   size: "icon",
@@ -67,7 +67,7 @@ export function Navbar() {
                 <TwitterIcon className="h-[1.1rem] w-[1.1rem]" />
               </Link>
               <Link
-                href="#"
+                href="https://in.linkedin.com/in/yashpreetrana"
                 className={buttonVariants({
                   variant: "ghost",
                   size: "icon",
