@@ -14,16 +14,7 @@ export const ROUTES: EachRoute[] = [
     noLink: true,
     items: [
       { title: "Introduction", href: "/introduction" },
-      {
-        title: "Installation",
-        href: "/installation",
-        items: [
-          { title: "Laravel", href: "/laravel" },
-          { title: "React", href: "/react" },
-          { title: "Gatsby", href: "/gatsby" },
-        ],
-      },
-      { title: "Quick Start Guide", href: "/quick-start-guide" },
+
       {
         title: "Project Structure",
         href: "/project-structure",
@@ -41,47 +32,47 @@ export const ROUTES: EachRoute[] = [
           },
         ],
       },
-      { title: "Changelog", href: "/changelog" },
       {
         title: "FAQ",
         href: "/faq",
       },
     ],
   },
+
   {
-    title: "Server Actions",
-    href: "/server-actions",
-    noLink: true,
-    items: [
-      { title: "getSession", href: "/getSession" },
-      { title: "getToken", href: "/getToken" },
-      { title: "getRole", href: "/getRole" },
-    ],
-  },
-  {
-    title: "React Hooks",
+    title: "React",
     href: "/react-hooks",
     noLink: true,
     items: [
       { title: "useSession", href: "/use-session" },
-      { title: "useFetch", href: "/use-fetch" },
-      { title: "useAuth", href: "/use-auth" },
-      { title: "useProduct", href: "/use-product" },
-      { title: "useOrder", href: "/use-order" },
-      { title: "useCart", href: "/use-cart" },
-      { title: "usePayment", href: "/use-payment" },
-      { title: "useShipping", href: "/use-shipping" },
-      { title: "useNotification", href: "/use-notification" },
-      { title: "useReview", href: "/use-review" },
-      { title: "useInventory", href: "/use-inventory" },
-      { title: "useUser", href: "/use-user" },
-      { title: "useSettings", href: "/use-settings" },
-      { title: "useAnalytics", href: "/use-analytics" },
-      { title: "useTheme", href: "/use-theme" },
-      { title: "useRouter", href: "/use-router" },
-      { title: "useData", href: "/use-data" },
+
     ],
   },
+  {
+    title: "Nextjs",
+    href: "/nextjs",
+    noLink: true,
+    items: [
+      { title: "What is Next ? ", href: "/intro" },
+    ],
+  },
+  {
+    title: "Javascript",
+    href: "/javascript",
+    noLink: true,
+    items: [
+      { title: "What is Javscript ?", href: "/introduction" },
+    ],
+  },
+  {
+    title: "Docker",
+    href: "/docker",
+    noLink: true,
+    items: [
+      { title: "What is Docker ? ", href: "/introduction" },
+    ],
+  }
+
 ];
 
 type Page = { title: string; href: string };
@@ -100,3 +91,4 @@ function getRecurrsiveAllLinks(node: EachRoute) {
 
 export const page_routes = ROUTES.map((it) => getRecurrsiveAllLinks(it)).flat();
 
+console.log(page_routes);
