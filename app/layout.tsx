@@ -9,9 +9,9 @@ import { Great_Vibes, Inter } from 'next/font/google'
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Portfolio Rambler",
+  title: "Rambler Rana",
   description:
-    "This comprehensive documentation template, crafted with Next.js and available as open-source, delivers a sleek and responsive design, tailored to meet all your project documentation requirements.",
+    "I'm Yashpreet Rana, a software engineer and web developer. I build websites and web applications.",
 };
 
 
