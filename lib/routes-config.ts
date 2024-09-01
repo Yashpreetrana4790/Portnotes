@@ -9,69 +9,29 @@ export type EachRoute = {
 
 export const ROUTES: EachRoute[] = [
   {
-    title: "Getting Started",
-    href: "/getting-started",
-    noLink: true,
-    items: [
-      { title: "Introduction", href: "/introduction" },
-
-      {
-        title: "Project Structure",
-        href: "/project-structure",
-        items: [
-          { title: "Layouts", href: "/layouts" },
-          { title: "Integrations", href: "/integrations" },
-          {
-            title: "Manual",
-            href: "/manual",
-            items: [
-              { title: "JavaScript", href: "/javascript" },
-              { title: "Typescript", href: "/typescript" },
-              { title: "Golang", href: "/golang" },
-            ],
-          },
-        ],
-      },
-      {
-        title: "FAQ",
-        href: "/faq",
-      },
-    ],
-  },
-
-  {
-    title: "React",
-    href: "/react-hooks",
-    noLink: true,
-    items: [
-      { title: "useSession", href: "/use-session" },
-
-    ],
-  },
-  {
-    title: "Nextjs",
-    href: "/nextjs",
-    noLink: true,
-    items: [
-      { title: "What is Next ? ", href: "/intro" },
-    ],
-  },
-  {
-    title: "Javascript",
+    title: "JavaScript",
     href: "/javascript",
     noLink: true,
     items: [
-      { title: "What is Javscript ?", href: "/introduction" },
+
+      { title: "Javascript Basics ", href: "/basics" },
+
     ],
   },
   {
-    title: "Docker",
-    href: "/docker",
+    title: "Next Js",
+    href: "/nextjs",
     noLink: true,
     items: [
-      { title: "What is Docker ? ", href: "/introduction" },
+      { title: "What is Next.js ?", href: "/introduction" },
+
+      {
+        title: "Why need Next.js ?",
+        href: "/whynextjs",
+      },
     ],
-  }
+  },
+
 
 ];
 

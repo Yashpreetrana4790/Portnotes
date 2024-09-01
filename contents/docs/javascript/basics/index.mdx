@@ -1,0 +1,313 @@
+---
+
+title: "JavaScript Basics: Essential Concepts for Beginners"
+
+description: "Explore the core concepts of JavaScript in this comprehensive guide. Perfect for beginners, this resource covers variables, data types, operators, functions, control structures, and more, providing a solid foundation for mastering JavaScript."
+
+---
+
+## What is JavaScript ?
+
+**JavaScript** is a lightweight, interpreted programming language known for adding interactivity to web pages.
+
+JavaScript is high level , dynamically typed , scripting language which can be used both for server side and client side web applications.
+
+- High-level ( High-level languages are programming languages that are used for writing **programs or software** that can be understood by humans and computers. )
+
+- Dynamically typed  : A dynamically typed language is a type of programming language in which the type of a variable is determined at runtime, rather than at compile-time. This means that you don’t have to explicitly declare the type of a variable when you create it.
+    
+    ### Dynamically typed :
+    
+    ```jsx
+    let x = 10;     // x is a number
+    x = "Hello";    // x is now a string
+    ```
+    
+    ### Statically Typed (C):
+    
+    ```jsx
+    int x = 10;     // x is an integer
+    x = "Hello";    // Error: Incompatible type assignment
+    ```
+    
+
+- **Scripting language:** A scripting language is a type of programming language that is often interpreted rather than compiled.
+
+- Event oriented  : In a web browser, JavaScript is used to handle events that occur on web pages, such as clicks, form submissions, or page loads. Event listeners are attached to elements, and when an event occurs, the corresponding handler is executed.
+
+- Server Client Applications  :  It can be used for both client side  and server side web work  : JavaScript can be used for both client-side and server-side development. On the client side, it handles user interactions and updates the webpage dynamically. On the server side, with Node.js, it manages server tasks like handling requests, interacting with databases, and serving content.
+
+- **Cross-platform Compatibility:** JavaScript is supported by all major web browsers, making it a cross-platform language. Node.js extends its usage to server-side development.
+
+## What is the difference between the Let ,Var , Const
+
+**`var`**:
+
+- **Scope**: Function-scoped or globally scoped. Not block-scoped.
+- **Hoisting**: Declared variables are hoisted to the top of their function or global context. They are initialized with `undefined`.
+- **Reassignment**: Variables can be reassigned and updated.
+- **Example**:
+    
+    ```jsx
+    javascriptCopy code
+    var x = 1;
+    if (true) {
+        var x = 2; // Same variable, function-scoped
+    }
+    console.log(x); // 2
+    
+    ```
+    
+
+**`let`**:
+
+- **Scope**: Block-scoped. Only accessible within the block (e.g., loops, conditionals) where it is defined.
+- **Hoisting**: Declared variables are hoisted but not initialized. Accessing them before declaration results in a ReferenceError (Temporal Dead Zone).
+- **Reassignment**: Variables can be reassigned and updated.
+- **Example**:
+    
+    ```jsx
+    javascriptCopy code
+    let y = 1;
+    if (true) {
+        let y = 2; // Block-scoped variable
+    }
+    console.log(y); // 1
+    
+    ```
+    
+
+**`const`**:
+
+- **Scope**: Block-scoped, like `let`.
+- **Hoisting**: Declared variables are hoisted but not initialized. Accessing them before declaration results in a ReferenceError (Temporal Dead Zone).
+- **Reassignment**: Variables cannot be reassigned once initialized. However, objects and arrays can still be mutated.
+- **Example**:
+    
+    ```jsx
+    javascriptCopy code
+    const z = 1;
+    // z = 2; // TypeError: Assignment to constant variable
+    
+    const obj = { a: 1 };
+    obj.a = 2; // Allowed, object properties can be modified
+    console.log(obj.a); // 2
+    
+    ```
+    
+
+## How JavaScript Works under the hood?
+
+### 1. Memory Allocation (Creation) Phase
+
+- **When It Begins**: This phase starts as soon as the JavaScript engine begins processing a script or a function.
+- **What Happens**:
+    - The JavaScript engine scans through the entire code (or the function body, if we're dealing with a function) before any actual execution happens.
+    - During this scan, it identifies all the variables and functions that are declared using `var`, `let`, `const`, as well as function declarations.
+    - **For `var`**: Variables are hoisted, meaning their memory is allocated and initialized to `undefined`. That is why we see the output like this  :
+    
+    ```jsx
+    console.log(x) // output  :  undefined  -- as it is defined with undefined 
+    //initially and we consoling before initialization.
+    var x = 9 
+    ```
+    
+    var x = 2
+    
+    - **For `let` and `const`**: Variables are also hoisted, but they are not initialized. They are placed in the Temporal Dead Zone (TDZ), and accessing them before their actual declaration results in a `ReferenceError`.
+    - **For Functions**: Function declarations (not expressions) are fully hoisted, meaning the entire function is stored in memory and can be invoked even before it appears in the code.
+
+### 2. Execution Phase
+
+- **When It Begins**: After the memory allocation phase is complete, the engine begins the execution phase.
+- **What Happens**:
+    - The JavaScript engine now executes the code line by line, in the order it appears.
+    - During this phase, the engine assigns values to variables and executes function calls.
+    - If a variable or function is accessed or invoked during this phase, the engine uses the references established in the memory allocation phase.
+    - **For `var`**: If the variable has been initialized earlier, it will now hold its assigned value; otherwise, it remains `undefined`.
+    - **For `let` and `const`**: The variables leave the Temporal Dead Zone once the line of code that declares and initializes them is reached, at which point they can be safely accessed.
+    - **Call Stack**: If the code contains function calls, new execution contexts are created for those functions, pushed onto the call stack, and then executed in turn.
+
+## What are the types of Datatype in the JavaScript ?
+
+JavaScript has a variety of data types that are used to store different kinds of values. These data types can be broadly classified into **primitive types** and **non-primitive types** (also known as reference types).
+
+### 1. Primitive Data Types
+
+Primitive data types are immutable and represent a single value. They are directly assigned to memory locations.
+
+- **`String`**: Represents a sequence of characters. Strings are enclosed in single quotes (`'...'`), double quotes (`"..."`), or backticks (``...``).
+    
+    ```jsx
+    javascriptCopy code
+    let name = "John";
+    let greeting = 'Hello';
+    let templateString = `Hi, ${name}!`;
+    
+    ```
+    
+
+- **`Number`**: Represents both integer and floating-point numbers. JavaScript uses a 64-bit floating-point format for all numbers.
+    
+    ```jsx
+    javascriptCopy code
+    let age = 25;          // Integer
+    let price = 99.99;     // Float
+    let largeNumber = 1e6; // Exponential (1 * 10^6)
+    
+    ```
+    
+
+- **`BigInt`**: Represents integers with arbitrary precision. It is used for very large integers beyond the `Number` type's safe range (`Number.MAX_SAFE_INTEGER`).
+    
+    ```jsx
+    javascriptCopy code
+    let bigIntNum = 1234567890123456789012345678901234567890n; // Add 'n' at the end to denote BigInt
+    
+    ```
+    
+
+- **`Boolean`**: Represents logical entities and can have two values: `true` or `false`.
+    
+    ```jsx
+    javascriptCopy code
+    let isAvailable = true;
+    let hasLicense = false;
+    
+    ```
+    
+
+- **`Undefined`**: Represents a variable that has been declared but not assigned a value.
+    
+    ```jsx
+    javascriptCopy code
+    let x; // Undefined because x is not assigned a value
+    console.log(x); // Output: undefined
+    
+    ```
+    
+
+- **`Null`**: Represents an explicitly empty or non-existent value. It is often used to signify "no value."
+    
+    ```jsx
+    javascriptCopy code
+    let emptyValue = null;
+    
+    ```
+    
+
+- **`Symbol`**: Represents a unique identifier. Symbols are immutable and unique, often used to create unique keys for objects.
+    
+    ```jsx
+    javascriptCopy code
+    let uniqueId = Symbol('id');
+    
+    ```
+    
+
+### 2. Non-Primitive Data Types (Reference Types)
+
+Non-primitive data types are mutable and can hold collections of values or more complex entities.
+
+- **`Object`**: Represents a collection of key-value pairs. Objects can store different types of data and more complex entities.
+    
+    ```jsx
+    javascriptCopy code
+    let person = {
+      name: 'Alice',
+      age: 30,
+      isStudent: false
+    };
+    
+    ```
+    
+    - **Arrays**: A special type of object used to store ordered collections of items. Arrays are zero-indexed.
+        
+        ```jsx
+        javascriptCopy code
+        let fruits = ['apple', 'banana', 'cherry'];
+        
+        ```
+        
+    - **Functions**: Also objects, but they are callable code blocks that perform specific tasks or computations.
+        
+        ```jsx
+        javascriptCopy code
+        function greet() {
+          return 'Hello, World!';
+        }
+        
+        ```
+        
+    - **Date**: An object representing dates and times.
+        
+        ```jsx
+        javascriptCopy code
+        let currentDate = new Date();
+        
+        ```
+        
+    - **RegExp (Regular Expressions)**: Used for pattern matching and text manipulation.
+        
+        ```jsx
+        javascriptCopy code
+        let regex = /hello/i;
+        
+        ```
+        
+
+### 3. Special Data Type: `typeof` Operator
+
+JavaScript provides the `typeof` operator to determine the data type of a variable. It can be useful to know what kind of data you're working with.
+
+```jsx
+javascriptCopy code
+console.log(typeof 42);          // Output: 'number'
+console.log(typeof 'JavaScript'); // Output: 'string'
+console.log(typeof true);         // Output: 'boolean'
+console.log(typeof undefined);    // Output: 'undefined'
+console.log(typeof null);         // Output: 'object' (this is a historical bug in JavaScript)
+console.log(typeof Symbol('id')); // Output: 'symbol'
+console.log(typeof {});           // Output: 'object'
+console.log(typeof []);           // Output: 'object' (arrays are objects)
+console.log(typeof function(){}); // Output: 'function'
+
+```
+
+## What is the difference between the Primitive and Non- Primitive Datatype ?
+
+| **Aspect** | **Primitive Data Types** | **Non-Primitive Data Types** |
+| --- | --- | --- |
+| **Definition** | Immutable data types that represent a single value. | Mutable data types that can store collections of values or complex entities. |
+| **Examples** | `String`, `Number`, `Boolean`, `Undefined`, `Null`, `Symbol`, `BigInt` | `Object`, `Array`, `Function`, `Date`, `RegExp` |
+| **Memory Allocation** | Stored directly in the stack. | Stored in the heap, but references (pointers) to them are stored in the stack. |
+| **Mutability** | Immutable (cannot be altered once created). | Mutable (can be changed or modified). |
+| **Copying** | When assigned or copied, a new copy of the value is created. | When assigned or copied, only the reference is copied, not the actual value. |
+| **Comparison** | Compared by value (checks if the actual values are the same). | Compared by reference (checks if both references point to the same memory location). |
+| **`typeof` Operator Output** | Returns the type of the value (e.g., `'string'`, `'number'`). | Returns `'object'` for objects and `'function'` for functions. |
+
+## What  is Type coercion ?
+
+**Type coercion** in JavaScript is the process of converting a value from one data type to another, either **implicitly** (automatically by JavaScript) or **explicitly** (manually by the developer). JavaScript is a loosely typed language, which means it performs type coercion to accommodate operations between different types.
+
+### 1. Implicit Coercion
+
+Implicit type coercion happens automatically when JavaScript encounters different types in an operation.
+
+```jsx
+let result1 = '5' + 2; // '5' is a string, 2 is a number
+console.log(result1);  // Output: '52' (Number 2 is coerced to a string '2')
+```
+
+### 2. Explicit Coercion
+
+Explicit coercion is when a developer manually converts a value from one type to another using global functions like `String()`, `Number()`, `Boolean()`, `parseInt()`, or other techniques.
+
+```jsx 
+let num = 10;
+let strNum = String(num); // Explicitly converts number to string
+
+let str = '123';
+let numStr = Number(str); // Explicitly converts string to number
+
+```
