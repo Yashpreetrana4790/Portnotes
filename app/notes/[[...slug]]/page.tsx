@@ -12,7 +12,6 @@ type PageProps = {
 
 export default async function DocsPage({ params: { slug = [] } }: PageProps) {
   const pathName = slug.join("/");
-  console.log("slugs,", slug, "slugs");
 
   const res = await getDocsForSlug(pathName);
 
