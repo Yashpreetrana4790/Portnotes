@@ -24,15 +24,20 @@ export const ROUTES: EachRoute[] = [
     noLink: true,
     items: [
       { title: "What is Next.js ?", href: "/introduction" },
-
       {
         title: "Why need Next.js ?",
         href: "/whynextjs",
       },
     ],
   },
-
-
+  {
+    title: "Accessibility",
+    href: "/accessibility",
+    noLink: true,
+    items: [
+      { title: "A11y", href: "/a11y" },
+    ],
+  },
 ];
 
 type Page = { title: string; href: string };

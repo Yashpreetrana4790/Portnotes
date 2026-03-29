@@ -1,0 +1,184 @@
+---
+title: Accessibility (A11y)
+description: A guide to web accessibility, WCAG standards, ARIA, and best practices for building inclusive web experiences.
+---
+
+## Web Accessibility
+
+Web accessibility means that websites and tools are designed so everyone can perceive, understand, navigate, and interact with them — including users with disabilities.
+
+## Disabilities
+
+- Visual
+- Hearing
+- Motor
+- Neurological
+- Speech
+- Temporary
+- Situational
+
+## Assistive Technology
+
+- Keyboard
+- Screen Reader — Tab, VoiceOver
+- Mouse or pointer devices
+- Touch devices
+- Screen Magnifiers
+
+## Accessibility Standards
+
+**WCAG (Web Content Accessibility Guidelines)**
+
+- Level A
+- Level AA
+- Level AAA
+
+At least AA should be achieved. WebAIM follows WCAG principles.
+
+## Screen Readers
+
+Screen readers help with reading, navigation, and taking actions.
+
+Inbuilt: VoiceOver
+
+Paid: JAWS, NVDA, ChromeVox, Narrator
+
+Semantic tags, alt tags, captions, labels, tables, lists, and headings all matter. Background images don't require alt text. For functional images, use a visually hidden span inside the anchor tag.
+
+## The Core Principles (P.O.U.R.)
+
+**Perceivable:** The user needs to see or hear all content, regardless of how it's presented.
+
+**Operable:** The user needs to be able to use all controls (buttons, links, forms) with whatever input method they prefer.
+
+**Understandable:** The user needs to know what is happening and how to proceed — clear language and consistent navigation.
+
+**Robust:** The user needs the content to work reliably with their specific assistive technology.
+
+## Accessibility for Screen Readers
+
+### 1. Accessible HTML
+
+**1.1 Document Structure**
+- `<header>`
+- `<nav>`
+- `<main>`
+- `<section>`
+- `<footer>`
+- `<article>`
+
+**1.2 Headings** — H1 to H6
+
+**1.3 Lists** — `ul`, `ol`, `li`
+
+**1.4 Links & Buttons** — `<a>`, `<button>`
+
+**1.5 Form Elements** — `<label>`, `<input type="">`
+
+**1.6 Tables** — `<caption>`, `<thead>`, `<tbody>`
+
+### 2. Use ARIA
+
+The accessibility tree is built from semantic tags, buttons, links, and other meaningful elements — not divs.
+
+**Labels:**
+- `aria-label`
+- `aria-labelledby`
+- `aria-describedby`
+
+**Roles, Properties, States:**
+- Role: `role="button"`
+- Property: `aria-describedby="id-ref"`
+- State: `aria-pressed="true"`
+
+**Images:**
+
+Decorative images — use empty `alt=""` or `aria-hidden="true"` so screen readers skip them.
+
+Functional images — wrap with a visually hidden span:
+
+```html
+<a href="/">
+  <span class="visually-hidden">Go to homepage</span>
+  <img src="logo.png" alt="" />
+</a>
+```
+
+## Focus Management
+
+**Tab-based navigation:** Many elements like `<a>`, `<input>`, `<select>`, `<textarea>` are auto-focused. Use `tabindex` for custom elements.
+
+**Keyboard Shortcuts:** e.g., pressing `N` opens a new post on Twitter.
+
+**Skip Links:** On focus, a "Skip to main content" link appears to bypass repeated nav links.
+
+**Tab Trapping:** Focus should stay inside a modal when it's open. Get all focusable elements, then call `modal.focus()` when the active element reaches the last focusable one.
+
+**Page Navigation:** Skip links + `aria-live` can announce changes for client-side rendered pages. Use `currentElement.focus()` to manage focus on route changes.
+
+## Color Contrast
+
+- Allow multiple font sizes
+- Support Dark Mode / Light Mode
+- Use `em` instead of `px` for font sizes
+- Use `prefers-color-scheme` media query
+
+## Tools for Accessibility
+
+**Automation:**
+- Axe (Windows)
+- `eslint-plugin-jsx-a11y`
+- Espresso
+- Accessibility plugin
+
+**Manual:**
+- Lighthouse
+- Deque's Axe tools
+- Element Tab in DevTools
+
+**Out of the Box:**
+- MUI
+- Fluent UI
+
+## Best Practices in Development
+
+1. Use HTML semantics
+2. Add labels to form elements
+3. Use sufficient color contrast
+4. Write descriptive link text
+5. Provide text alternatives for non-text content
+6. Show visible focus indicators
+7. Add captions for video and audio
+8. Use WAI-ARIA only when necessary
+
+## How to Test Accessibility
+
+1. Zoom to 400%
+2. Run a Lighthouse audit
+3. Deactivate CSS
+4. Use a screen reader without looking at the screen
+5. Check keyboard-only navigation
+
+## Fixing Common Accessibility Issues
+
+```jsx
+// ❌ Not keyboard accessible
+<div onclick="alert('hello')">button</div>
+
+// ✅ Add role for screen readers
+<div role="button" onclick="alert('hello')">button</div>
+
+// ✅ Add tabindex for keyboard focus
+<div tabIndex={0} role="button" onclick="alert('hello')">button</div>
+
+// ✅ Add description for context
+<div
+  tabIndex={0}
+  role="button"
+  aria-describedby="btn-desc"
+  onclick="alert('hello')"
+>
+  button
+</div>
+<span id="btn-desc">Shows a hello alert</span>
+```

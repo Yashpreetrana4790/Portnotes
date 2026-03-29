@@ -1,92 +1,147 @@
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
+type Project = {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  liveUrl: string;
+  githubUrl: string;
+};
 
+const projects: Project[] = [
+  {
+    title: "Dev Overflow",
+    description:
+      "A social platform where developers can share experiences, ask questions, and get help from the community.",
+    image: "/images/devflow.svg",
+    tags: ["Next.js", "MongoDB", "Tailwind CSS", "Node.js"],
+    liveUrl: "#",
+    githubUrl: "#",
+  },
+  {
+    title: "Portnotes",
+    description:
+      "A personal portfolio and notes site built with Next.js and MDX, featuring a docs-style notes section and blog.",
+    image: "/images/computerhello.svg",
+    tags: ["Next.js", "MDX", "Tailwind CSS", "TypeScript"],
+    liveUrl: "#",
+    githubUrl: "#",
+  },
+  {
+    title: "Git Explorer",
+    description:
+      "A tool to explore GitHub repositories, view commit history, and visualize contributor activity in real time.",
+    image: "/images/git.svg",
+    tags: ["React", "Node.js", "Express.js", "GitHub API"],
+    liveUrl: "#",
+    githubUrl: "#",
+  },
+];
 
-const Aboutme: React.FC = () => {
-
-
-  const techs = [
-    {
-      label: "Next.js",
-
-    },
-    {
-      label: "Node.js",
-
-    },
-    {
-      label: "Express.js",
-
-    },
-    {
-      label: "MongoDB",
-
-    },
-    {
-      label: "Tailwind CSS",
-
-    },
-    {
-      label: "Docker",
-
-    },
-    {
-      label: "Git",
-
-    }
-  ]
-
-
+export default function ProjectsPage() {
   return (
-    <div className=' py-[70px] '>
-      <div className='container mx-auto  padding-md'>
-        <div className='flex flex-col lg:flex-row items-center justify-between lg:gap-[100px]' >
-          <div className='lg:w-1/2 mb-[60px] '>
-            <h2 className='  text-[45px] sm:text-[73px] font-display text-primary  dark:text-primary-light max-lg:text-center'>Projects</h2>
-            <p className='mb-[40px] max-lg:text-center font-inter font-normal '>
-              Creating projects is an essential part of the learning journey. It's not just about understanding concepts theoretically; it's about applying them in real-world scenarios. Every project you undertake is an opportunity to solidify your knowledge, hone your skills, and explore new horizons.
-              <br />
+    <div className="py-[70px]">
+      <div className="container mx-auto">
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row items-center justify-between lg:gap-[100px] mb-[60px]">
+          <div className="lg:w-1/2 mb-[40px] lg:mb-0">
+            <h2 className="text-[45px] sm:text-[73px] font-display text-primary dark:text-primary-light max-lg:text-center">
+              Projects
+            </h2>
+            <p className="mb-[24px] max-lg:text-center font-inter font-normal text-muted-foreground">
+              A collection of things I've built — from full-stack apps to dev
+              tools. Each project is a chance to learn something new and ship
+              something real.
             </p>
-            <span className='max-lg:flex max-lg:justify-center font-inter font-normal'>
-              I have build projects in the following technologies :
-            </span>
-            <div className='flex max-lg:justify-center flex-wrap gap-[10px] text-[14px] my-3'>
-              {techs.map((tech, index) => (
-                <Button key={index} className='text-white font-inter rounded-2xl min-w-[100px]'>
-                  {tech.label}
-                </Button>
-              ))}
+            <p className="max-lg:text-center font-inter font-normal text-sm text-muted-foreground">
+              Technologies I work with:
+            </p>
+            <div className="flex max-lg:justify-center flex-wrap gap-2 mt-3">
+              {["Next.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS", "Docker", "Git"].map(
+                (tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 rounded-full text-xs font-inter border border-border bg-muted text-muted-foreground"
+                  >
+                    {tech}
+                  </span>
+                )
+              )}
             </div>
           </div>
-          <div className='lg:w-1/2 hidden lg:block  '>
-            <Image src={"/images/code.svg"} alt="code image" width={100} height={100} className='max-w-[567px] max-height-[456px] w-full h-full' />
+          <div className="lg:w-1/2 hidden lg:flex justify-center">
+            <Image
+              src="/images/code.svg"
+              alt="code illustration"
+              width={480}
+              height={380}
+              className="w-full h-auto max-w-[480px]"
+            />
           </div>
         </div>
-        <Link href="#" className='mb-[100px]'>
-          <div className='bg-primarylight rounded-[27px]  text-center'>
-            <h2 className='text-[35px] font-inter md:mt-10 mb-7'>Dev  <span className='text-primary  dark:text-primary-light text-underline text-decoration-yellow'> Overflow</span></h2>
-            <p className='text-[17px] mb-7   text-center  font-inter font-normal max-w-[690px] mx-auto'>
-              Dev Overflow is a social platform where developers can share their experiences, ask questions, and get help from other developers. It's a place where developers can learn, share their knowledge, and get help from other developers.
-            </p>
-            <div className='flex justify-center'>
 
-              <Image src={"/images/devflow.svg"} alt="code image" width={100} height={100} className='max-w-[690px] max-height-[375px] w-full h-full' />
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {projects.map((project) => (
+            <div
+              key={project.title}
+              className="group flex flex-col rounded-2xl border border-border bg-card overflow-hidden hover:shadow-lg transition-shadow duration-300"
+            >
+              {/* Image */}
+              <div className="bg-muted flex items-center justify-center p-6 h-[200px] overflow-hidden">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  width={300}
+                  height={160}
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+
+              {/* Content */}
+              <div className="flex flex-col flex-1 p-5 gap-3">
+                <h3 className="text-lg font-semibold font-inter">{project.title}</h3>
+                <p className="text-sm text-muted-foreground font-inter leading-relaxed flex-1">
+                  {project.description}
+                </p>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2 py-0.5 rounded-full text-xs font-inter bg-primary/10 text-primary dark:text-primary-light"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-3 pt-2">
+                  <Link href={project.liveUrl} className="flex-1">
+                    <Button className="w-full rounded-xl text-white font-inter text-sm h-9">
+                      Live Demo
+                    </Button>
+                  </Link>
+                  <Link href={project.githubUrl} className="flex-1">
+                    <Button
+                      variant="outline"
+                      className="w-full rounded-xl font-inter text-sm h-9"
+                    >
+                      GitHub
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </div>
-            <div className='flex flex-wrap justify-center gap-[10px] text-[14px] my-3 rounded-full'>
-              {techs.map((tech, index) => (
-                <Button key={index} className='text-white rounded-3xl  min-w-[100px] h-[40px] font-inter'>
-                  {tech.label}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
-};
-
-export default Aboutme;
+}
